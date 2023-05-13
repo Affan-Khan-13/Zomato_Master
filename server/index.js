@@ -8,6 +8,7 @@ require("dotenv").config();
 
 //conig 
 import googleAuthConfig from "./config/google.config";
+import routeConfig from "./config/route.config";
 
 //Database Connection
 import ConnectDB from "./database/connection"
@@ -41,6 +42,7 @@ zomato.use(passport.session());
 
 //passport configuration
 googleAuthConfig(passport);
+routeConfig(passport);
 
 //For Application Routes(localhost:4000/auth/signup)
 zomato.use("/auth",Auth);

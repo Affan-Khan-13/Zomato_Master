@@ -11,12 +11,6 @@ const Router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({storage});
 
-//AWS s3 Bucket config
-const s3Bucket = new AWS.S3({
-    accessKeyId: process.env.AWS_S3_ACSESS_KEY,
-    secretAccessKey: process.env.AWS_S3_SECRET_KEY,
-    region: "ap-south-1"
-})
 
 
 //uploading given image to s3bucket and then saving the file to mongodb
@@ -33,6 +27,7 @@ Router.post("/",upload.single("file"),async(req,res)=>{
         }
 
         const uploadImage = await s3Upload(bucketOptions);
+        res.status(200).json({uploadImage});
 
     }
     catch(error){

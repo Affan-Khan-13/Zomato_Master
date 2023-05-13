@@ -3,12 +3,15 @@ import passport from "passport";
 
 
 import { FoodModel } from "../../database/allModels";
+import {ValidateRestaurantId, ValidateCategory} from "../../validation/food";
+
 
 const Router = express.Router();
 
 //food based on restaurant
 Router.get("/:id",async (req,res)=>{
     try{
+        ValidateRestaurantId(req.params);
         const {_id} = req.params;
         const foods = await FoodModel.find({restaurant: _id});
         return res.status(200).json({foods});
@@ -22,6 +25,7 @@ Router.get("/:id",async (req,res)=>{
 //
 Router.get("/r/:category",async(req,res)=>{
     try{
+        ValidateCategory(req.params);
         const {category} = req.params;
         const foods = await FoodModel.find({
           category: { $regex: category, $options: "i"}
